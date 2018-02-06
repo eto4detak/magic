@@ -223,8 +223,3 @@ require_once get_template_directory() . '/inc/api-rest.php';
 
 
 
-
-
-
-
-

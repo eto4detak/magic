@@ -6,6 +6,19 @@
 @color_white : #CED3DC;
 @color_blue : #4E8098;
 @color_green : #38925E;
+@color_black : #0F0D21;
+
+@color_red_light: #F7E4C5;
+@color_white_light : #FCF4D9;
+@color_blue_light : #54B0BD;
+@color_green_light : #52948B;
+@color_black_light : #DBD3D8;
+
+@color_red_dark : #D63932;
+@color_white_dark : #B9C2C8;
+@color_blue_dark : #076F8A;
+@color_green_dark : #004C45;
+@color_black_dark : #0D0B1B;
 
 body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, li, ol, a, em, img, strong, fieldset, form, label, article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
   font-family: inherit;
@@ -112,10 +125,12 @@ html{
   span,a,a:visited{
 
     color: @color_red;
+    outline:none;
 
   }
   
   .menu-bar {
+    padding:1em;
     .site-branding {
       .custom-logo-link {
         line-height: 12px;
@@ -133,7 +148,7 @@ html{
         .site-title{
          color:@color_red;
          a{
-          font-size: 20px;
+          font-size: 3em;
           color:@color_red;
          }
         }
@@ -141,7 +156,70 @@ html{
     }
     .main-navigation {
       width: auto;
-      margin-left: 10px;
+      margin: 0.5em;
+      .nav-menu{
+        .menu-item{
+          box-sizing: border-box;
+          background: @color_white_dark;
+          border-left: 1px solid #0001;
+          &:first-child{
+            border-left:none;
+          }
+          &:hover{
+            &::before{
+              content: "";
+              position: absolute;
+              bottom: 0px;
+              display: block;
+              background-color: @color_white;
+              height: 0.28em;
+              width: 100%;
+              left: 0;
+            }
+
+          }
+          a{
+            color: #fff;
+            padding: 1em;
+          }
+          .sub-menu{
+            .menu-item{
+              background-color: @color_white;
+              border-bottom: 1px solid #0001;
+              color:@color_black;
+              &:hover{
+                color:#fff;
+                a{
+                  color: inherit;
+                  &:hover{
+                    color:#fff;
+                  }
+                }
+              }
+              a{
+                color: inherit;
+                &:hover{
+                  color:#fff;
+                }
+              }
+             &:hover{
+
+                &::before{
+                  content: "";
+                  position: absolute;
+                  bottom: 0px;
+                  display: block;
+                  background-color: @color_red;
+                  height: 0.28em;
+                  width: 50%;
+                  left: 0;
+                }
+
+              }
+            }
+          }
+        }
+      }
     }
     .pull-right {
       margin-left: 10px;
@@ -269,20 +347,40 @@ html{
       ul.products{
         display: flex;                
         flex-direction: row;
-        justify-content:space-between; 
+        justify-content:center; 
         flex-wrap: wrap;
         // align-content: flex-end ;
-        // align-items:flex-start ;
+        align-items:flex-start ;
         .product{
+          max-width:185px;
+          width: auto;
+          margin-right: 0;
+          margin-bottom: 1em;
           display: flex;                
           flex-direction: column;
           justify-content:space-between; 
           flex-wrap: nowrap;
           align-content: flex-end ;
-
           align-items:flex-start ;
+          position: relative;
+          &:hover{
+            .product_type_simple,.product_type_variable{
+              opacity:1;
+              display: block;
+              position: absolute;
+             margin: 0;
+             top:60%;
+             left:50%;
+             transform: translateX(-50%);
+             transition: all 300ms;
+             color:@color_red;
+             background:@color_white_dark;
+            }
+          }
           .carousel{
             .carousel-inner{
+              max-width:185px;
+               max-height:220px;
               .onsale{
                 border-radius:1px;
                 margin: 0;
@@ -309,8 +407,8 @@ html{
             ins{
               margin-left: 10px;
               span{
-                font-weight:600;
-                color: @color_green;
+                font-weight:400;
+                color: @color_red;
                 font-size:1.2em;
               }
             }
@@ -323,8 +421,19 @@ html{
             }
             .woocommerce-Price-amount{
               font-size:1.2em;
-               font-weight:600;
+               font-weight:400;
             }
+          }
+
+
+          .product_type_simple,.product_type_variable{
+            opacity:0;
+            display: block;
+            position: absolute;
+            margin: 0;
+            top:100%;
+            left:50%;
+            transform: translateX(-50%);
           }
         }
       }
@@ -344,23 +453,42 @@ html{
   }
 }
 .top-bar {
+  background-color:  @color_black_light;
+  padding:0.5em;
+  display:flex;
+  flex-direction: row;
+  justify-content:space-between; 
+
   .head-option {
-   background-color:  #F7E4C5;
+   background-color: inherit;
     .info {
       margin-left: 10px;
 
-      .box-phone {
-        i {
-          font-size: 16px;
-
+      .phone-number {
+        &:before{
           display: inline-block;
-        }
-        div {
-          display: inline-block;
+          font: normal normal normal 14px/1 FontAwesome;
+          font-size: inherit;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          content: "\f095";
         }
       }
       .email {
+        color:@color_blue;
         margin-left: 20px;
+        &:before{
+          display: inline-block;
+          font: normal normal normal 14px/1 FontAwesome;
+          font-size: inherit;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          content: "\f0e0";
+        }
+        a{
+          color:inherit;
+        }
+
       }
     }
 
@@ -397,7 +525,7 @@ html{
     }
   }
   .social{
-    background-color: #F7E4C5;
+
   }
 }
 
@@ -615,7 +743,7 @@ footer{
             line-height: 27px;
             text-transform: uppercase;
             font-family: Poppins,sans-serif;
-            font-weight: 600;
+            font-weight: 400;
             padding-bottom: 7px;
             color: #eeeeee;
           }

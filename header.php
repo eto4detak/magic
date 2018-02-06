@@ -34,22 +34,19 @@ section and everything up until
 					<div class="top-bar">
 						<div class=" head-option m-row">
 							<div class="info m-row">
-								<div class="box-phone">
-									<i class="fa fa-phone"></i>
-									<?php $address = get_option('magic_options_address')? get_option('magic_options_address') :'';
-									 if($address !== '' )	{?>
-									<div class="contents">
-										<p><?php echo  $address[0] ?></p>
-									</div>
-									<?php } ?>
-								</div>
+								<?php $address = get_option('magic_options_address')? get_option('magic_options_address') :'';
+								if($address !== '' ):?>
+									<span class="phone-number" >
+										<?php echo  $address[0]; ?>
+									</span>
+								<?php endif; ?>
 								<?php 
 									$emails = carbon_get_theme_option('crb_contact_address', 'complex');
 									if($emails = $emails[0]['email']): ?>
-								<div class="email"> <i class="fa fa-envelope"></i>
+								<div class="email">
 									<a href="mailto:<?php echo $emails ?>"><?php echo $emails ?></a>
 								</div>
-							<?php endif ?>
+							<?php endif; ?>
 							</div>
 							<!-- #box-phone -->
 							<div class="settings m-row">
@@ -172,16 +169,17 @@ section and everything up until
 								<?php esc_html_e( 'Primary Menu', 'magic' ); ?></button>
 							<?php
 							wp_nav_menu( array(
-								'theme_location' =>
-							'menu-1',
-								'menu_id'        => 'primary-menu',
+								'theme_location' =>		'menu-1',
+								'menu_class'      => 'mainmenu ', 
+								'menu_id'        => 	'primary-menu',
 							) );
 							?>
 						</nav>
 						<!-- #site-navigation -->
 						<div class="pull-right m-row">
-							<?php get_search_form(); ?>
-							<a href="непоиск">непоиск</a>
+							<div class="search">
+									<?php get_search_form(); ?>
+							</div>
 							<?php do_action( 'magic_header'); ?>
 						</div>
 						<!-- #pull-right -->
