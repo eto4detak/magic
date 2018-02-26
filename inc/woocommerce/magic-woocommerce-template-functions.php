@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /*========================================================
-		*		MINI CARTy
+		*		MINI CART
 		========================================================*/
 if ( ! function_exists( 'magic_header_cart' ) ) {
 	function magic_header_cart() {
@@ -67,6 +67,7 @@ if ( ! function_exists( 'magic_end_slider_wrapper' ) ) {
  	  <?php
 	}
 }
+
 if ( ! function_exists( 'magic_template_loop_product_title' ) ) {
 	function magic_template_loop_product_title() {
 
@@ -84,6 +85,45 @@ if ( ! function_exists( 'action_woocommerce_new_order' ) ) {
 		echo '<h3 class="woocommerce-loop-product__title"><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></h3>';
 	}
 }
+/*========================================================
+		*		CARD
+		========================================================*/
+if ( ! function_exists( 'magic_woocommerce_sale_flash' ) ) {
+	function magic_woocommerce_sale_flash($content) {
+		global $product;
+		if($var = get_post_meta($product->get_id(), '_new_opt')){
+			$content  =  get_post_meta($product->get_id(), '_new_opt')[0];
+		}else{
+			$reg = (int)$product->get_regular_price();
+			$price = (int)$product->get_sale_price();
+			if($reg && $price && $reg !== 0){
+				$var =	(int)(( $reg - $price ) / $reg * 100 );
+				$content = $var? '-' . $var . ' %' : ''; 
+			}
+		}
+		 $content = '<span class="onsale">' . $content . '</span>';
+		return $content;
+	}
+}
+if ( ! function_exists( 'magic_template_wrapper_price' ) ) {
+	function magic_template_wrapper_price() {
+		echo '<div class="shop_button">';
+	}
+}
+if ( ! function_exists( 'magic_template_wrapper_price_end' ) ) {
+	function magic_template_wrapper_price_end() {
+		echo '</div>';
+	}
+}
+
+if ( ! function_exists( 'woo_custom_single_add_to_cart_text' ) ){
+	function woo_custom_single_add_to_cart_text() {
+    return __( 'В корзину', 'magic' );
+	}
+}
+
+
+
 
 /*========================================================
 		*		шаблон для карусели

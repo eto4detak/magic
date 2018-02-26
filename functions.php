@@ -114,7 +114,7 @@ function magic_widgets_init() {
 		'name'          => esc_html__( 'Sidebar Footer', 'magic' ),
 		'id'            => 'footer-1',
 		'description'   => esc_html__( 'Add widgets here.', 'magic' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'before_widget' => '<section id="%1$s" class="widget %2$s col-sm col-12">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h5 class="widget-title">',
 		'after_title'   => '</h5>',
@@ -129,13 +129,21 @@ add_action( 'widgets_init', 'magic_widgets_init' );
  */
 function magic_scripts() {
 
-	wp_enqueue_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css' );
+	// wp_enqueue_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' );
+	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css' );
+
 	wp_enqueue_style( 'magic-style', get_stylesheet_uri() );
-	wp_enqueue_style( 'header-style', get_template_directory_uri() . '/css/style.css' );
+	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/theme-style.css' );
 	wp_enqueue_style( 'owl-carousel1', get_template_directory_uri() . '/css/owl.carousel.min.css' );
 	wp_enqueue_style( 'owl-carousel2', get_template_directory_uri() . '/css/owl.theme.default.css' );
+	wp_enqueue_style( 'fontawe', get_template_directory_uri() . '/css/font-awesome.min.css' );
 
-	wp_enqueue_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js' );
+
+	// wp_enqueue_script( 'bootstrap-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' );
+	// wp_enqueue_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' );
+		wp_enqueue_script( 'bootstrap-popper', get_template_directory_uri() . '/js/popper.min.js', array(), '20180206', true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '20180206', true );
+
 	wp_enqueue_script( 'magic-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20171019', true );
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl.carousel.js', array(), '20171019', true );
 	wp_enqueue_script( 'owl-carou', get_template_directory_uri() . '/js/owlcarou.js', array(), '20171020', true );
@@ -208,10 +216,14 @@ require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-temp
 require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-hooks.php';
 require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-function.php';
 // require_once get_template_directory() . '/inc/api-coupon.php';
-require_once get_template_directory() . '/inc/api-rest.php';
+// require_once get_template_directory() . '/inc/woocommerce/magic-http-api-woocommerce.php';
 // require_once get_template_directory() . '/inc/api-dollors-rubli.php';
 // require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-rubli.php';
- // require_once get_template_directory() . 'inc/woocommerce/margin-woocomerce-add-order.php';
+ // require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-add-order.php';
+  require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-add-field-to-product.php';
+ // require_once get_template_directory() . '/inc/wp/magic-http-api.php';
+ require_once get_template_directory() . '/inc/wp/magic-breadcrumbs.php';
+ // require_once get_template_directory() . '/inc/field.php';
 
 
 

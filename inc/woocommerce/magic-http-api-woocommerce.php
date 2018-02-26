@@ -1,6 +1,6 @@
 <?php
 
-require_once( 'lib/woocommerce-api.php' );
+require_once( '/../lib/woocommerce-api.php' );
 
 $options = array(
 	'debug'           => true,

@@ -20,13 +20,14 @@ section and everything up until
 		">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
 
 		<?php wp_head(); ?></head>
 
 <body <?php body_class(); ?>
 		>
 		<div id="main-wrapper" class="main-wrapper">
+
 			<a class="skip-link screen-reader-text" href="#content">
 				<?php esc_html_e( 'Skip to content', 'magic' ); ?></a>
 			<div class="wrapper" id="boxed-all">
@@ -49,7 +50,6 @@ section and everything up until
 							<?php endif; ?>
 							</div>
 							<!-- #box-phone -->
-							<div class="settings m-row">
 								<?php 
 								$currencys = carbon_get_theme_option('magic_currency', 'complex');
 								if($currencys[0]['mini_сurrency']) { ?>
@@ -66,8 +66,6 @@ section and everything up until
 
 								</div>
 								<?php }?>
-
-							</div>
 								<?php 
 								$lang = carbon_get_theme_option('magic_language', 'complex');
 								if($lang[0]) { ?>
@@ -165,15 +163,17 @@ section and everything up until
 						<!-- .site-branding -->
 
 						<nav id="site-navigation" class="main-navigation">
-							<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-								<?php esc_html_e( 'Primary Menu', 'magic' ); ?></button>
-							<?php
-							wp_nav_menu( array(
+							<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'magic' ); ?></button>
+							<div class="mobile-menu">
+								<h3 class="mobile-menu-title col-12"><?php esc_html_e( 'Menu', 'magic' );?><i class="mobile-menu-close col-1">X</i></h3>
+								<div class="mobile-menu-options"></div>
+							<?php wp_nav_menu( array(
 								'theme_location' =>		'menu-1',
 								'menu_class'      => 'mainmenu ', 
 								'menu_id'        => 	'primary-menu',
 							) );
 							?>
+							</div>
 						</nav>
 						<!-- #site-navigation -->
 						<div class="pull-right m-row">
@@ -187,8 +187,9 @@ section and everything up until
 					<!-- #menu-bar -->
 				</header>
 				<!-- #masthead -->
-				<div id="content" class="site-content">
-
+				<div id="content" class="site-content container">
+				<div  class="row">
+			<?php if( function_exists('kama_breadcrumbs') ) kama_breadcrumbs(' - '); ?>
 					<!--для разработчика -->
 
 					<script type="text/javascript">

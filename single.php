@@ -11,7 +11,7 @@ get_header(); ?>
 <script type="text/javascript">
 	console.log('template = page');
 </script>
-	<div id="primary" class="content-area">
+	<div id="primary" class="content-area col-md-8 col-lg-9 col-xl-10">
 		<main id="main" class="site-main">
 
 		<?php

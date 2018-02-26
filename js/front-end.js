@@ -2,10 +2,10 @@
 	/*========================================================
 			*		HEADER валюта перевод
 			========================================================*/
-	$('.location, .currency').on("click", ".dropdown-toggle", function(e) {
-		$(this).find('.dropdown-menu').addClass("open");
-		e.stopPropagation();
-	});
+	/*	$('.location, .currency').on("click", ".dropdown-toggle", function(e) {
+			$(this).find('.dropdown-menu').addClass("open");
+			e.stopPropagation();
+		});*/
 
 	$('.dropdown-menu').on('click', 'li', function(e) {
 		var currency = $(this).data('value');

@@ -6,7 +6,8 @@ Template Post Type: post, page
 */
 
 get_header(); ?>
-<div id="primary" class="content-area">
+
+<div id="primary" class="content-area col-md-8 col-lg-9 col-xl-10">
 	<main id="main" class="site-main container">
 
 		 <?php  $args = array(
@@ -45,7 +46,6 @@ get_header(); ?>
 			</div>
 		<?php endwhile; ?>
 
-		<h1>[products]</h1>
 		<?php echo  do_shortcode( '[products ids=' . implode(',', $p_ids) . ']') ?>
 	</main><!-- #main -->
 </div><!-- #primary -->
