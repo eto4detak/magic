@@ -79,6 +79,17 @@ if ( ! function_exists( 'magic_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+
+
+		/*========================================================
+				*		
+				========================================================*/
+				add_theme_support( 'woocommerce' );
+		add_theme_support( 'wc-product-gallery-zoom' );
+		add_theme_support( 'wc-product-gallery-lightbox' );
+		add_theme_support( 'wc-product-gallery-slider' );
+
+		add_theme_support( 'wc-product-gallery-zoom' );
 	}
 endif;
 add_action( 'after_setup_theme', 'magic_setup' );
@@ -148,6 +159,7 @@ function magic_scripts() {
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl.carousel.js', array(), '20171019', true );
 	wp_enqueue_script( 'owl-carou', get_template_directory_uri() . '/js/owlcarou.js', array(), '20171020', true );
 	wp_enqueue_script( 'front-end', get_template_directory_uri() . '/js/front-end.js', array('bootstrap'), '20171104', true );
+	wp_enqueue_script( 'zoom', get_template_directory_uri() . '/js/zoom.js', array('bootstrap'), '20171104', true );
 
 	wp_enqueue_script( 'magic-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
@@ -215,6 +227,7 @@ require_once get_template_directory() . '/inc/frontend.php';
 require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-functions.php';
 require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-hooks.php';
 require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-function.php';
+require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-h.php';
 // require_once get_template_directory() . '/inc/api-coupon.php';
 // require_once get_template_directory() . '/inc/woocommerce/magic-http-api-woocommerce.php';
 // require_once get_template_directory() . '/inc/api-dollors-rubli.php';

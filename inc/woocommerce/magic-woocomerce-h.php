@@ -12,3 +12,8 @@ var_dump($posts_per_page);
 	return  2; 
 }
 */
+if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '>=' ) ) {
+	add_filter( 'woocommerce_add_to_cart_fragments', 'magic_cart_link_fragment' );
+} else {
+	add_filter( 'add_to_cart_fragments', 'magic_cart_link_fragment' );
+}
