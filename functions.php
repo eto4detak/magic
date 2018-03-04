@@ -233,11 +233,13 @@ require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-h.php
 // require_once get_template_directory() . '/inc/api-dollors-rubli.php';
 // require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-rubli.php';
  // require_once get_template_directory() . '/inc/woocommerce/magic-woocomerce-add-order.php';
-  require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-add-field-to-product.php';
- // require_once get_template_directory() . '/inc/wp/magic-http-api.php';
+ require_once get_template_directory() . '/inc/woocommerce/magic-woocommerce-template-add-field-to-product.php';
  require_once get_template_directory() . '/inc/wp/magic-breadcrumbs.php';
  // require_once get_template_directory() . '/inc/field.php';
-
+ 
+// HTTP API 
+ // require_once get_template_directory() . '/inc/wp/magic-http-api.php';
+ require_once get_template_directory() . '/inc/wp/magic-rest-api.php';
 
 
 
