@@ -14,10 +14,8 @@
 
 <footer id="colophon" class="site-footer">
 <div class="site-info container">
-	<div class="ABOUT">
-		<div class="row">
-			<?php get_sidebar('footer'); ?>
-		</div>
+	<div class="ABOUT row">
+		<?php get_sidebar('footer'); ?>
 	</div>
 </div>
 <!-- .site-info -->

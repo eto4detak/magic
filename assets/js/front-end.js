@@ -1,3 +1,13 @@
+/*========================================================
+  *  Сайдбар
+========================================================*/
+var sidebar = new StickySidebar('#secondary', {
+	containerSelector: '#content-box',
+	innerWrapperSelector: '.sidebar__inner',
+	topSpacing: 20,
+	bottomSpacing: 20
+});
+
 (function($) {
 	/*========================================================
 			*		HEADER валюта перевод
@@ -48,5 +58,6 @@
 	$('.carousel-control-prev').on('click', function() {
 		$(this).parent().carousel('prev');
 	});
+
 
 })(jQuery);

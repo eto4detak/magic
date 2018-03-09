@@ -7,7 +7,10 @@ Template Post Type: post, page
 
 get_header(); ?>
 
-<div id="primary" class="content-area col-md-8 col-lg-9 col-xl-10">
+<?php if ( is_active_sidebar( 'sidebar-1' ) ) {
+
+}?>
+<div id="primary" class="content-area col ">
 	<main id="main" class="site-main container">
 
 		 <?php  $args = array(
@@ -33,7 +36,7 @@ get_header(); ?>
 						<?php $count = 1; ?>
 						<?php else :$count++; 
 					endif; ?>
-				<?php endwhile;wp_reset_postdata(); ?>
+					<?php endwhile;wp_reset_postdata(); ?>
 					<?php if($count!==1) : ?>
 					</div>
 					<?php endif; ?>
@@ -41,12 +44,16 @@ get_header(); ?>
 		<?php endif;?>
 
 		<?php while ( have_posts() ) : the_post();?>
-			<div class="entry-content">
 			<?php the_content();?>
-			</div>
 		<?php endwhile; ?>
+		<div id="content-box" class="row">
+			<?php if( is_active_sidebar( 'sidebar-1' ) ) $col = 'col-md-8 col-lg-9 col-xl-10'; ?>
+			<?php echo  do_shortcode( '[products class="content ' . $col . '" ' . 'ids=' . implode(',', $p_ids) . ']') ?>
+			<?php get_sidebar(); ?>
+		</div>
 
-		<?php echo  do_shortcode( '[products ids=' . implode(',', $p_ids) . ']') ?>
+
 	</main><!-- #main -->
 </div><!-- #primary -->
-<?php get_footer();
+<?php 
+get_footer();

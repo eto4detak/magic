@@ -1,4 +1,28 @@
 <?php 
+/*========================================================
+  * [Работа с медиафайлами]  Дополнительные размеры медиафайлов 
+========================================================*/
+add_image_size('resource-single', 400, 300, true); 
+add_image_size('resource-home', 300, 200, true); 
+add_image_size('post-home', 300, 107, true); 
+
+function res_new_image_sizes($sizes) {
+    $mysizes = array(
+        'resource-single' => 'Ресурс (большая)',
+        'resource-home' => 'Ресурс (маленькая)',
+        'post-home' => 'Пост (маленькая)',
+    );
+    $newsizes = array_merge($sizes, $mysizes);
+    return $newsizes;
+}
+// Фильтрует имена и метки размеров изображений
+add_filter('image_size_names_choose', 'res_new_image_sizes');
+/*========================================================
+  * [ / Работа с медиафайлами]
+========================================================*/
+/*========================================================
+  * Создать поле опции в админке Настройки -> Общие
+========================================================*/
 function add_option_field_category_woocommerce(){
 	$option_name = 'cat_slug_standart_template_woocommerce';
 	register_setting( 'general', $option_name );
@@ -15,10 +39,9 @@ function add_option_field_category_woocommerce(){
 	);
 }
 add_action('admin_menu', 'add_option_field_category_woocommerce');
-
-function sasasgsffasdasg_setting_callback_function( $val ){
-	$id = $val['id'];
-	$option_name = $val['option_name'];
+function sasasgsffasdasg_setting_callback_function( $data ){
+	$id = $data['id'];
+	$option_name = $data['option_name'];
 	?>
 	<textarea style="width:300px"
 		type="text" 
@@ -28,15 +51,6 @@ function sasasgsffasdasg_setting_callback_function( $val ){
 	<?
 }
 
-
-
-
-
-/*========================================================
-		*		
-		========================================================*/
-
-
 /*
 Plugin Name: Произвольные записи 
 Description: Произвольные записи "Ресурсы", таксономии "Коллекции" и "Метки". 
@@ -45,11 +59,10 @@ Author: Flector
 Author URI: https://profiles.wordpress.org/flector#content-plugins
 */ 
 
+/*========================================================
+  *  Post Type: Ресурсы
+========================================================*/
 function register_resources_custom_posts() {
-
-	/**
-	 * Post Type: Ресурсы.
-	 */
 
 	$labels = array(
 		"name" => __( "Ресурсы", "" ),
@@ -94,18 +107,15 @@ function register_resources_custom_posts() {
 		"query_var" => true,
 		"supports" => array( "title", "editor", "thumbnail", "custom-fields", "comments", "revisions", "author" ),
 	);
-
 	register_post_type( "resource", $args );
 }
-
 add_action( 'init', 'register_resources_custom_posts' );
 
 
-function register_taxes_col_tag() {
-
-	/**
-	 * Taxonomy: Коллекции.
-	 */
+/*========================================================
+  *  Taxonomy: Коллекции , метки
+========================================================*/
+function register_taxonomy_col_tag() {
 
 	$labels = array(
 		"name" => __( "Коллекции", "" ),
@@ -126,7 +136,6 @@ function register_taxes_col_tag() {
 		"not_found" => __( "Коллекций не найдено", "" ),
 		"no_terms" => __( "Нет коллекций", "" ),
 	);
-
 	$args = array(
 		"label" => __( "Коллекции", "" ),
 		"labels" => $labels,
@@ -145,15 +154,11 @@ function register_taxes_col_tag() {
 	);
 	register_taxonomy( "collection", array( "resource" ), $args );
 
-	/**
-	 * Taxonomy: Метки.
-	 */
 
 	$labels = array(
 		"name" => __( "Метки", "" ),
 		"singular_name" => __( "Метка", "" ),
 	);
-
 	$args = array(
 		"label" => __( "Метки", "" ),
 		"labels" => $labels,
@@ -172,106 +177,41 @@ function register_taxes_col_tag() {
 	);
 	register_taxonomy( "rtag", array( "resource" ), $args );
 }
-
-add_action( 'init', 'register_taxes_col_tag' );
-
-//дополнительные размеры медиафайлов start
-add_image_size('resource-single', 400, 300, true); 
-add_image_size('resource-home', 300, 200, true); 
-add_image_size('post-home', 300, 107, true); 
- 
-function res_new_image_sizes($sizes) {
-    $mysizes = array(
-        'resource-single' => 'Ресурс (большая)',
-        'resource-home' => 'Ресурс (маленькая)',
-        'post-home' => 'Пост (маленькая)',
-    );
-    $newsizes = array_merge($sizes, $mysizes);
-    return $newsizes;
-}
-add_filter('image_size_names_choose', 'res_new_image_sizes');
-//дополнительные размеры медиафайлов end
+add_action( 'init', 'register_taxonomy_col_tag' );
 
 
-//создаем метабокс begin
+/*========================================================
+    *    Добавить метабокс и поля в таксономию resourse
+========================================================*/
 function respost_meta_box(){
     add_meta_box('respost_meta_box', 'Информация о ресурсе', 'respost_callback', 'resource', 'normal' , 'high');
 }
 add_action( 'add_meta_boxes', 'respost_meta_box' );
-//создаем метабокс end
 
-//сохраняем метабокс begin
-function respost_save_metabox($post_id){ 
-    global $post;
-    
-    if ( ! isset( $_POST['respost_meta_nonce'] ) ) 
-        return $post_id;
- 
-    if ( ! wp_verify_nonce($_POST['respost_meta_nonce'], plugin_basename(__FILE__) ) )
-		return $post_id;
-    
-	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
-		return $post_id;
-    
-    
-    if(isset($_POST["res_main_page_meta"])){
-        update_post_meta($post->ID, 'res_main_page_meta', 'yes');
-    } else {
-        update_post_meta($post->ID, 'res_main_page_meta', 'no');
-    }   
-    if(isset($_POST["in_top_meta"])){
-        update_post_meta($post->ID, 'in_top_meta', 'yes');
-    } else {
-        update_post_meta($post->ID, 'in_top_meta', 'no');
-    } 
-    
-    update_post_meta($post->ID, 'res_url', sanitize_text_field($_POST['res_url']));
-    update_post_meta($post->ID, 'ancor_url', sanitize_text_field($_POST['ancor_url']));
-    update_post_meta($post->ID, 'fav_url', sanitize_text_field($_POST['fav_url']));
-    update_post_meta($post->ID, 'relh2', sanitize_text_field($_POST['relh2']));
-
-    update_post_meta($post->ID, 'res_date', sanitize_text_field($_POST['res_date']));
-    update_post_meta($post->ID, 'res_link', sanitize_text_field($_POST['res_link']));
-    update_post_meta($post->ID, 'res_link_t', sanitize_text_field($_POST['res_link_t']));
-    update_post_meta($post->ID, 'res_link2', sanitize_text_field($_POST['res_link2']));
-    update_post_meta($post->ID, 'res_link2_t', sanitize_text_field($_POST['res_link2_t']));
-
-    $rat = get_post_meta($post->ID, 'ec_stars_rating_ava', true); 
-    if (!$rat) {
-    update_post_meta($post->ID, 'ec_stars_rating_ava', '1');
-    }
-
-}
-add_action('save_post', 'respost_save_metabox');
-//сохраняем метабокс end
-
-//выводим метабокс begin
+//выводим метабокс 
 function respost_callback(){
-    global $post;
-	wp_nonce_field( plugin_basename(__FILE__), 'respost_meta_nonce' );
+  global $post;
+  wp_nonce_field( plugin_basename(__FILE__), 'respost_meta_nonce' );
     
-    $res_main_page_meta = get_post_meta($post->ID, 'res_main_page_meta', true); 
-    if (!$res_main_page_meta) {$res_main_page_meta = 'no';} 
-    
-    $in_top_meta = get_post_meta($post->ID, 'in_top_meta', true); 
-    if (!$in_top_meta) {$in_top_meta = 'no';} 
-    
-    $ancor_url = get_post_meta($post->ID, 'ancor_url', true); 
-    $res_url = get_post_meta($post->ID, 'res_url', true); 
-    $fav_url = get_post_meta($post->ID, 'fav_url', true); 
-    $relh2 = get_post_meta($post->ID, 'relh2', true);
+  $res_main_page_meta = get_post_meta($post->ID, 'res_main_page_meta', true); 
+  if (!$res_main_page_meta) {$res_main_page_meta = 'no';} 
+  
+  $in_top_meta = get_post_meta($post->ID, 'in_top_meta', true); 
+  if (!$in_top_meta) {$in_top_meta = 'no';} 
+  
+  $ancor_url = get_post_meta($post->ID, 'ancor_url', true); 
+  $res_url = get_post_meta($post->ID, 'res_url', true); 
+  $fav_url = get_post_meta($post->ID, 'fav_url', true); 
+  $relh2 = get_post_meta($post->ID, 'relh2', true);
 
-    $res_date = get_post_meta($post->ID, 'res_date', true);
-    $res_link = get_post_meta($post->ID, 'res_link', true);
-    $res_link_t = get_post_meta($post->ID, 'res_link_t', true);
-    $res_link2 = get_post_meta($post->ID, 'res_link2', true);
-    $res_link2_t = get_post_meta($post->ID, 'res_link2_t', true);
+  $res_date = get_post_meta($post->ID, 'res_date', true);
+  $res_link = get_post_meta($post->ID, 'res_link', true);
+  $res_link_t = get_post_meta($post->ID, 'res_link_t', true);
+  $res_link2 = get_post_meta($post->ID, 'res_link2', true);
+  $res_link2_t = get_post_meta($post->ID, 'res_link2_t', true);
+  ?>   
 
-    ?>   
-    
-   
-    
-    <p style="margin:5px!important;margin-top:10px!important;">
+  <p style="margin:5px!important;margin-top:10px!important;">
     
     URL ссылки: <br />
     <input type="text" name="res_url" size="60" value="<?php echo stripslashes($res_url); ?>" /><br />
@@ -301,63 +241,53 @@ function respost_callback(){
     <input type="text" name="res_link2_t" size="60" value="<?php echo stripslashes($res_link2_t); ?>" /><br />
     
     </p>
-    
-
-    
 <?php }
-//выводим метабокс end
 
+//сохраняем метабокс
+function respost_save_metabox($post_id){
+  global $post;
+  if ( ! isset( $_POST['respost_meta_nonce'] ) ) return $post_id;
+  if ( ! wp_verify_nonce($_POST['respost_meta_nonce'], plugin_basename(__FILE__) ) )return $post_id;
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
+
+  if(isset($_POST["res_main_page_meta"])){
+      update_post_meta($post->ID, 'res_main_page_meta', 'yes');
+  } else {
+      update_post_meta($post->ID, 'res_main_page_meta', 'no');
+  }   
+  if(isset($_POST["in_top_meta"])){
+      update_post_meta($post->ID, 'in_top_meta', 'yes');
+  } else {
+      update_post_meta($post->ID, 'in_top_meta', 'no');
+  } 
+    
+  update_post_meta($post->ID, 'res_url', sanitize_text_field($_POST['res_url']));
+  update_post_meta($post->ID, 'ancor_url', sanitize_text_field($_POST['ancor_url']));
+  update_post_meta($post->ID, 'fav_url', sanitize_text_field($_POST['fav_url']));
+  update_post_meta($post->ID, 'relh2', sanitize_text_field($_POST['relh2']));
+
+  update_post_meta($post->ID, 'res_date', sanitize_text_field($_POST['res_date']));
+  update_post_meta($post->ID, 'res_link', sanitize_text_field($_POST['res_link']));
+  update_post_meta($post->ID, 'res_link_t', sanitize_text_field($_POST['res_link_t']));
+  update_post_meta($post->ID, 'res_link2', sanitize_text_field($_POST['res_link2']));
+  update_post_meta($post->ID, 'res_link2_t', sanitize_text_field($_POST['res_link2_t']));
+
+  $rat = get_post_meta($post->ID, 'ec_stars_rating_ava', true); 
+  if (!$rat) {
+  update_post_meta($post->ID, 'ec_stars_rating_ava', '1');
+  }
+}
+add_action('save_post', 'respost_save_metabox');
+
+    //    доп поля для таксономии на странице добавления терминов
 function my_taxonomy_add_meta_fields( $taxonomy ) {
     ?>
-    <div class="form-field term-group">
-        <label for="collection_thumb"><?php _e( 'URL картинки коллекции:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_thumb" name="collection_thumb" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_thumb_title"><?php _e( 'Title картинки коллекции:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_thumb_title" name="collection_thumb_title" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_thumb_alt"><?php _e( 'Alt картинки коллекции:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_thumb_alt" name="collection_thumb_alt" />
-    </div>
-    <div class="form-field term-group">
-        <label for="down_opis"><?php _e( 'Нижнее описание:', 'my-plugin' ); ?></label>
-        <textarea rows="5" cols="60" name="down_opis" id="down_opis"><?php echo $down_opis; ?></textarea>
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_views"><?php _e( 'Просмотры:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_views" name="collection_views" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_main"><input type="checkbox" value="enabled" name="collection_main" id="collection_main" <?php if ($collection_main == 'yes') echo "checked='checked'"; ?> />Разместить на главной странице</label><br />
-    </div>
-
-
-    <div class="form-field term-group">
-        <label for="collection_q"><?php _e( 'Описание 1:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_q" name="collection_q" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_w"><?php _e( 'Описание 2:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_w" name="collection_w" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_e"><?php _e( 'Описание 3:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_e" name="collection_e" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_r"><?php _e( 'Описание 4:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_r" name="collection_r" />
-    </div>
-    <div class="form-field term-group">
-        <label for="collection_t"><?php _e( 'Описание 5:', 'my-plugin' ); ?></label>
-        <input type="text" id="collection_t" name="collection_t" />
-    </div>
 
     <?php
 }
 add_action( 'collection_add_form_fields', 'my_taxonomy_add_meta_fields', 10, 2 );
+
+// доп поля для таксономии на странице редактирования термина
 function my_taxonomy_edit_meta_fields( $term, $taxonomy ) {
     $collection_thumb = get_term_meta( $term->term_id, 'collection_thumb', true );
     $collection_thumb_title = get_term_meta( $term->term_id, 'collection_thumb_title', true );
@@ -481,6 +411,8 @@ function my_taxonomy_edit_meta_fields( $term, $taxonomy ) {
     <?php
 }
 add_action( 'collection_edit_form_fields', 'my_taxonomy_edit_meta_fields', 10, 2 );
+
+// сохранить доп поля таксономии
 function my_taxonomy_save_taxonomy_meta( $term_id, $tag_id ) {
     if( isset( $_POST['collection_thumb'] ) ) {
         update_term_meta( $term_id, 'collection_thumb', esc_attr( $_POST['collection_thumb'] ) );
@@ -536,9 +468,9 @@ function my_taxonomy_save_taxonomy_meta( $term_id, $tag_id ) {
 }
 add_action( 'created_collection', 'my_taxonomy_save_taxonomy_meta', 10, 2 );
 add_action( 'edited_collection', 'my_taxonomy_save_taxonomy_meta', 10, 2 );
+
 function my_taxonomy_add_field_columns( $columns ) {
     //$columns['collection_thumb'] = __( 'URL картинки коллекции:', 'my-plugin' );
-
     return $columns;
 }
 add_filter( 'manage_edit-composer_columns', 'my_taxonomy_add_field_columns' );

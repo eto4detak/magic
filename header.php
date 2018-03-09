@@ -24,8 +24,7 @@ section and everything up until
 
 		<?php wp_head(); ?></head>
 
-<body <?php body_class(); ?>
-		>
+<body <?php body_class(); ?>>
 		<div id="main-wrapper" class="main-wrapper">
 
 			<a class="skip-link screen-reader-text" href="#content">

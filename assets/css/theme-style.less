@@ -123,6 +123,14 @@ html{
     // background: #294;
   }
 }
+main{
+  aside.widget-area{
+    padding: 0;
+    a:hover{
+      color: @color_red_dark;
+    }
+  }
+}
 
 /*========================================================
     *   HEADER
@@ -131,7 +139,7 @@ html{
 .main-wrapper{
   .site-content{
     .kama_breadcrumbs{
-      width:95%;
+      width:98%;
       margin: auto;
     }
   }
@@ -541,7 +549,7 @@ html{
   background-color:  @color_black_light;
   padding:0.5em 0;
   margin:auto;
-  width:95%;
+  width:98%;
   display:flex;
   flex-direction: row;
   justify-content:space-between; 
@@ -788,7 +796,7 @@ ul.social-icon {
 
 
 .container{
-  width:95%;
+  width:98%;
   max-width:none;
   margin: auto;
   padding:0;
@@ -806,10 +814,13 @@ footer{
     color: #F46D78;
     text-decoration: none;
   }
+  a:hover{
+    transition:.2s;
+    color: @color_white;
+  }
 
   .site-info{
     .ABOUT{
-      .row{
         display: flex;                
         flex-direction: row;
         justify-content:space-around; 
@@ -838,7 +849,7 @@ footer{
             }
           }
         }
-      }
+      
     }
   }
 }
@@ -905,7 +916,5 @@ footer{
   }
 
 }
-
-
 
 
