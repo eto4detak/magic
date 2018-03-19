@@ -74,12 +74,11 @@ if ( ! class_exists( 'Magic' ) ) :
 			wp_enqueue_script( 'bootstrap-popper', $path_js . 'popper.min.js', array(), '20180206', true );
 			wp_enqueue_script( 'bootstrap',        $path_js . 'bootstrap.min.js', array(), '20180206', true );
 			wp_enqueue_script( 'magic-navigation', $path_js . 'navigation.js', array(), '20171019', true );
-			wp_enqueue_script( 'owl-carousel',     $path_js . 'owl.carousel.js', array(), '20171019', true );
-			wp_enqueue_script( 'owl-carou',        $path_js . 'owlcarou.js', array(), '20171020', true );
-			wp_enqueue_script( 'zoom',             $path_js . 'zoom.js', array('bootstrap'), '20171104', true );
+			wp_enqueue_script( 'owl-carousel',     $path_js . 'plugins/owl.carousel.js', array(), '20171019', true );
 			wp_enqueue_script( 'magic-skip-link-focus-fix', $path_js . 'skip-link-focus-fix.js', array(), '20151215', true );
-			wp_enqueue_script( 'slick-slider',     $path_js . 'plugins/sticky-sidebar.js', array(), '20180309', true );
-			wp_enqueue_script( 'front-end',        $path_js . 'front-end.js', array('bootstrap','slick-slider'), '20180309', true );
+			if ( is_active_sidebar( 'sidebar-1' ) ) 
+			wp_enqueue_script( 'slick-sidebar',    $path_js . 'plugins/sticky-sidebar.js', array(), '20180309', true );
+			wp_enqueue_script( 'front-end',        $path_js . 'front-end.js', array('bootstrap','slick-sidebar','owl-carousel'), '20180309', true );
 
 			if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 				wp_enqueue_script( 'comment-reply' );

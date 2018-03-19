@@ -160,20 +160,20 @@ section and everything up until
 						<!-- #logo-description -->
 						</div>
 						<!-- .site-branding -->
-
-						<nav id="site-navigation" class="main-navigation">
-							<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'magic' ); ?></button>
-							<div class="mobile-menu">
-								<h3 class="mobile-menu-title col-12"><?php esc_html_e( 'Menu', 'magic' );?><i class="mobile-menu-close col-1">X</i></h3>
-								<div class="mobile-menu-options"></div>
+						<!-- <nav id="site-navigation" class="main-navigation"> -->
+						<!-- 	<button style="display:none" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'magic' ); ?></button> -->
+							<div class="menu-container">
+							<!-- 	<h3 class="mobile-menu-title col-12"><?php esc_html_e( 'Menu', 'magic' );?><i class="mobile-menu-close col-1">X</i></h3> -->
 							<?php wp_nav_menu( array(
+								'container'       => 'div', 
+								'container_class' => 'menu', 
 								'theme_location' =>		'menu-1',
 								'menu_class'      => 'mainmenu ', 
 								'menu_id'        => 	'primary-menu',
 							) );
 							?>
 							</div>
-						</nav>
+						<!-- </nav> -->
 						<!-- #site-navigation -->
 						<div class="pull-right m-row">
 							<div class="search">

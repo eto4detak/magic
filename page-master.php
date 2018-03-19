@@ -12,7 +12,6 @@ get_header(); ?>
 }?>
 <div id="primary" class="content-area col ">
 	<main id="main" class="site-main container">
-
 		 <?php  $args = array(
 		'posts_per_page' => '40',
 		'post_type' => 'product',
@@ -46,9 +45,9 @@ get_header(); ?>
 		<?php while ( have_posts() ) : the_post();?>
 			<?php the_content();?>
 		<?php endwhile; ?>
-		<div id="content-box" class="row">
-			<?php if( is_active_sidebar( 'sidebar-1' ) ) $col = 'col-md-8 col-lg-9 col-xl-10'; ?>
-			<?php echo  do_shortcode( '[products class="content ' . $col . '" ' . 'ids=' . implode(',', $p_ids) . ']') ?>
+		<div id="content-box" class="">
+			<?php $col = is_active_sidebar( 'sidebar-1' ) ?  'col-md-8 col-lg-9 col-xl-10' : ''; ?>
+			<?php echo  do_shortcode( '[products class="content-ar '  . '" ' . 'ids=' . implode(',', $p_ids) . ']') ?>
 			<?php get_sidebar(); ?>
 		</div>
 
