@@ -41,7 +41,7 @@ if ( ! function_exists( 'carbon_get_comment_meta' ) ) {
 if(class_exists('Carbon_Fields\Container') )
 {
 
-Container::make( 'theme_options', 'Пульт' )
+Container::make( 'theme_options', 'Управление' )
 		 ->add_tab( 'Шапка сайта', array(
 			 Field::make( 'complex', 'crb_contact_address', 'Настройки кантактов' )->add_class('my-custom-class')
 				  ->add_fields( array(

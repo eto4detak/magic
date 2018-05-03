@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+
+
 	var $companyInfo = $('.company-info');
 
 	// Добавляет бокс с вводом адреса фирмы

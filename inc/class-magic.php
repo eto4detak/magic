@@ -68,6 +68,7 @@ if ( ! class_exists( 'Magic' ) ) :
 			wp_enqueue_style( 'owl-carousel1',	$path_css . 'owl.carousel.min.css' );
 			wp_enqueue_style( 'owl-carousel2', 	$path_css . 'owl.theme.default.css' );
 			wp_enqueue_style( 'fontawe', 				$path_css . 'font-awesome.min.css' );
+			wp_enqueue_style( 'test', 				$path_css . 'test.css' );
 
 			// wp_enqueue_script( 'bootstrap-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' );
 			// wp_enqueue_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' );
@@ -76,10 +77,10 @@ if ( ! class_exists( 'Magic' ) ) :
 			wp_enqueue_script( 'magic-navigation', $path_js . 'navigation.js', array(), '20171019', true );
 			wp_enqueue_script( 'owl-carousel',     $path_js . 'plugins/owl.carousel.js', array(), '20171019', true );
 			wp_enqueue_script( 'magic-skip-link-focus-fix', $path_js . 'skip-link-focus-fix.js', array(), '20151215', true );
+			wp_enqueue_script( 'front-end',        $path_js . 'front-end.js', array('bootstrap','slick-sidebar','owl-carousel'), '20180309', true );
+			wp_enqueue_script( 'test',        $path_js . 'test.js', array(), '20180503', true );
 			if ( is_active_sidebar( 'sidebar-1' ) ) 
 			wp_enqueue_script( 'slick-sidebar',    $path_js . 'plugins/sticky-sidebar.js', array(), '20180309', true );
-			wp_enqueue_script( 'front-end',        $path_js . 'front-end.js', array('bootstrap','slick-sidebar','owl-carousel'), '20180309', true );
-
 			if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 				wp_enqueue_script( 'comment-reply' );
 			}

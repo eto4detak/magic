@@ -11,6 +11,8 @@ get_header(); ?>
 
 }?>
 <div id="primary" class="content-area col ">
+	<a href="#" class="eModal-1">Open Modal</a>
+	<?php echo GetPolis("бре"); ?>
 	<main id="main" class="site-main container">
 		 <?php  $args = array(
 		'posts_per_page' => '40',

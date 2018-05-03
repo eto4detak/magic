@@ -26,6 +26,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 ========================================================*/
 //require_once  $path  . 'magic-http-api.php';
 // require_once $path . 'magic-rest-api.php';
+require_once $path . 'ex-api-polis.php';
 
 /*========================================================
 		*		WooCommerce

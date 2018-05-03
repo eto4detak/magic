@@ -144,3 +144,73 @@ class My_Best_Metaboxes {
 	}
 
 }
+
+
+/*============================================
+	metabox
+===============================================*/
+	// Добавляем блоки в основную колонку на страницах постов и пост. страниц
+add_action('add_meta_boxes', 'child_travelify_add_custom_box');
+function child_travelify_add_custom_box(){
+	$screens = array( 'post', 'page' );
+	add_meta_box( 'child_travelify_sectionid', 'Дополнительный блок', 'child_travelify_meta_box_callback', $screens );
+}
+
+// HTML код блока
+function child_travelify_meta_box_callback( $post, $meta ){
+	$screens = $meta['args'];
+
+	// Используем nonce для верификации
+	wp_nonce_field( plugin_basename(__FILE__), 'child_travelify_noncename' );
+
+     if(!empty(get_post_meta( $post->ID, '_my_meta_value_key'))) $flag_no_title = get_post_meta( $post->ID, '_my_meta_value_key');
+	// Поля формы для введения данных
+	echo '<label for="child_travelify_new_field">' . __("Скрыть заголовок страницы", 'child_travelify_textdomain' ) . '</label> ';
+	echo '<input type="text" id= "child_travelify_new_field" name="child_travelify_new_field" value="'. $flag_no_title[0] .'" size="25" />';
+	?>
+		<p>
+		<input type="hidden" name="extra[white]" value="">
+		<label><input type="checkbox" name="extra[white]" value="1" <?php checked( get_post_meta($post->ID, 'white', 1), 1 )?> /> белый</label>
+		<input type="hidden" name="extra[red]" value="">
+		<label><input type="checkbox" name="extra[red]" value="1"   <?php checked( get_post_meta($post->ID, 'red',   1), 1 )?> /> красный</label>
+		<input type="hidden" name="extra[black]" value="">
+		<label><input type="checkbox" name="extra[black]" value="1" <?php checked( get_post_meta($post->ID, 'black', 1), 1 )?> /> черный</label>
+	</p>
+	<?php 
+}
+
+// Сохраняем данные, когда пост сохраняется
+add_action( 'save_post', 'child_travelify_save_postdata' );
+function child_travelify_save_postdata( $post_id ) {
+	
+	// проверяем nonce нашей страницы, потому что save_post может быть вызван с другого места.
+	if ( ! wp_verify_nonce( $_POST['child_travelify_noncename'], plugin_basename(__FILE__) ) )
+		return;
+
+	// если это автосохранение ничего не делаем
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
+		return;
+
+	// проверяем права юзера
+	if( ! current_user_can( 'edit_post', $post_id ) )
+		return;
+
+
+		if ( ! isset( $_POST['child_travelify_new_field'] ) ){
+				// Все ОК. Теперь, нужно найти и сохранить данные
+			$my_data = sanitize_text_field( $_POST['child_travelify_new_field'] );
+			update_post_meta( $post_id, '_my_meta_value_key', $my_data );
+		}
+
+
+	$_POST['extra'] = array_map('trim', $_POST['extra']);
+	foreach( $_POST['extra'] as $key=>$value ){
+		if( empty($value) ){
+			delete_post_meta($post_id, $key); // удаляем поле если значение пустое
+			continue;
+		}
+
+		update_post_meta( $post_id, $key, $value ); // add_post_meta() работает автоматически
+	}
+
+}
