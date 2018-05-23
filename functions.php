@@ -26,3 +26,5 @@ if ( magic_is_woocommerce_activated() ) {
 	require_once 'inc/woocommerce/magic-woocommerce-function.php';
 }
 
+include_once 'inc/flatsome-add-function-variation-menu.php';
+

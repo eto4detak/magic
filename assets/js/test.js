@@ -1,74 +1,112 @@
-console.log("test");
+'use strict';
 
-// 'use strict';
-// function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
-// r(function(){
-//     if (!document.getElementsByClassName) {
-//         // Поддержка IE8
-//         var getElementsByClassName = function(node, classname) {
-//             var a = [];
-//             var re = new RegExp('(^| )'+classname+'( |$)');
-//             var els = node.getElementsByTagName("*");
-//             for(var i=0,j=els.length; i<j; i++)
-//                 if(re.test(els[i].className))a.push(els[i]);
-//             return a;
-//         }
-//         var videos = getElementsByClassName(document.body,"youtube");
-//     } else {
-//         var videos = document.getElementsByClassName("youtube");
-//     }
+    /*========================================================
+      *  API IP
+    ========================================================*/
 
-//     var nb_videos = videos.length;
-//     for (var i=0; i<nb_videos; i++) {
-//         // Зная идентификатор видео на YouTube, легко можно найти его миниатюру
-//         videos[i].style.backgroundImage = 'url(http://i.ytimg.com/vi/' + videos[i].id + '/sddefault.jpg)';
+(function(){
+    'use strict';
+  var name;
+  console.log(name);
+ // console.log(name.namme);
+   var jqxhr = $.getJSON('//ipapi.co/json/', function(data) {
+     console.log(JSON.stringify(data, null, 2));
+    })
+    .fail(function(data){
+      console.log('запрос с ошибкой');
+    });;
+})();
 
-//         // Добавляем иконку Play поверх миниатюры, чтобы было похоже на видеоплеер
-//         var play = document.createElement("div");
-//         play.setAttribute("class","play");
-//         videos[i].appendChild(play);
+(function(){
+  var name;
+  console.log("Second function");
 
-//         videos[i].onclick = function() {
-//             // создаем iframe со включенной опцией autoplay
-//             var iframe = document.createElement("iframe");
-//             var iframe_url = "https://www.youtube.com/embed/" + this.id + "?autoplay=1&autohide=1";
-//             if (this.getAttribute("data-params")) iframe_url+='&'+this.getAttribute("data-params");
-//             iframe.setAttribute("src",iframe_url);
-//             iframe.setAttribute("frameborder",'0');
-
-//             // Высота и ширина iframe должны быть такими же, как и у родительского блока
-//             iframe.style.width  = this.style.width;
-//             iframe.style.height = this.style.height;
-
-//             // Заменяем миниатюру плеером с YouTube
-//             this.parentNode.replaceChild(iframe, this);
-//         }
-//     }
-// });
+})();
 
 
-// youtube для скачки диномически
+(function() {
 
-// "use strict";
-// $(function() {
-//     $(".youtube").each(function() {
-//         // Зная идентификатор видео на YouTube, легко можно найти его миниатюру
-//         $(this).css('background-image', 'url(http://i.ytimg.com/vi/' + this.id + '/sddefault.jpg)');
-//         console.log($);
-//         // Добавляем иконку Play поверх миниатюры, чтобы было похоже на видеоплеер
-//         $(this).append($('<div/>', {'class': 'play'}));
-
-//         $(document).delegate('#'+this.id, 'click', function() {
-//             // создаем iframe со включенной опцией autoplay
-//             var iframe_url = "https://www.youtube.com/embed/" + this.id + "?autoplay=1&autohide=1";
-//             if ($(this).data('params')) iframe_url+='&'+$(this).data('params');
-
-//             // Высота и ширина iframe должны быть такими же, как и у родительского блока
-//             var iframe = $('<iframe/>', {'frameborder': '0', 'src': iframe_url, 'width': $(this).width(), 'height': $(this).height() })
-
-//             // Заменяем миниатюру HTML5 плеером с YouTube
-//             $(this).replaceWith(iframe);
-//         });
+// $.getJSON('http://ip-api.com/json?callback=?', function(data) {
+//   console.log(JSON.stringify(data, null, 2));
+// })
+// .fail(function(data){
+//       console.log('запрос с ошибкой');
 //     });
-//  });
+
+//   $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback', function(data) {
+//   console.log(JSON.stringify(data, null, 2));
+// })
+// .fail(function(data){
+//       console.log('запрос с ошибкой');
+//     });;
+
+// $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
+//   console.log(JSON.stringify(data, null, 2));
+// })
+// .fail(function(data){
+//       console.log('запрос с ошибкой');
+//     });
+
+   var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+   $.getJSON( flickerAPI, {
+     tags: "mount rainier",
+     tagmode: "any",
+     format: "json"
+   })
+   .done(function( data ) {
+  console.log( data);
+   })
+   .fail(function(data){//fail - при ошибке в запросе
+              console.log('запрос с ошибкой');
+          });;
+
+//ОСТОРОЖНО
+// var findIP = new Promise(r=>{var w=window,a=new (w.RTCPeerConnection||w.mozRTCPeerConnection||w.webkitRTCPeerConnection)({iceServers:[]}),b=()=>{};a.createDataChannel("");a.createOffer(c=>a.setLocalDescription(c,b,b),b);a.onicecandidate=c=>{try{c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)}catch(e){}}})
+
+// /*Usage example*/
+// findIP.then(ip => document.write('your ip: ', ip)).catch(e => console.error(e))
+
+})();
+
+if (true) {
+
+  sayHi(); // работает
+
+  function sayHi() {
+    console.log("Привет!");
+  }
+
+}
+
+console.log('end test');
+
+
+(function(){
+  'use strict';
+  console.log("test2.js");
+
+  var tok = '7641967042.c1e404e.1fcdb358d38c4f4fb054f26fcb8b5a53', // я уже давал ссылку чуть выше
+    userid = '7641967042', // ID пользователя, можно выкопать в исходном HTML, можно использовать спец. сервисы либо просто смотрите следующий пример :)
+    kolichestvo = 4; // ну это понятно - сколько фоток хотим вывести
+ 
+$.ajax({
+  url: 'https://api.instagram.com/v1/users/' + userid + '/media/recent',
+  dataType: 'jsonp',
+  type: 'GET',
+  data: {access_token: tok, count: kolichestvo}, // передаем параметры, которые мы указывали выше
+  success: function(result){
+    console.log(result);
+    for( x in result.data ){
+      $('ul').append('<li><img src="'+result.data[x].images.low_resolution.url+'"></li>'); // result.data[x].images.low_resolution.url - это URL картинки среднего разрешения, 306х306
+      // result.data[x].images.thumbnail.url - URL картинки 150х150
+      // result.data[x].images.standard_resolution.url - URL картинки 612х612
+      // result.data[x].link - URL страницы данного поста в Инстаграм 
+    }
+  },
+  error: function(result){
+    console.log(result); // пишем в консоль об ошибках
+  }
+});
+  console.log("finish test2.js");
+})();
 

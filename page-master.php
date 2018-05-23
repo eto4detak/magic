@@ -10,7 +10,23 @@ get_header(); ?>
 <?php if ( is_active_sidebar( 'sidebar-1' ) ) {
 
 }?>
+
 <div id="primary" class="content-area col ">
+
+
+<div class="b-geo-target">
+	<span class="b-geo-target__description">Ваш город:  </span>
+	<div class="b-geo-target__content">
+		<div class="b-geo-target__header">Москва</div>
+		<ul class="b-geo-target__munu ">
+			<a rel="nofollow" href="/?wt_city_by_default=Москва">Москва</a>
+			<a rel="nofollow" href="/?wt_region_by_default=Рязань">Рязань</a>
+			<a rel="nofollow" href="/?wt_region_by_default=Владимир">Владимир</a>
+		</ul>
+	</div>
+
+</div>
+	<?php GetInstagram(); ?>
 	<a href="#" class="eModal-1">Open Modal</a>
 	<?php echo GetPolis("бре"); ?>
 	<main id="main" class="site-main container">

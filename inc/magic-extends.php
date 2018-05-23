@@ -13,8 +13,9 @@ require_once $path . 'init-tgm.php';				//плагин tgm
 require_once $path . 'customizer.php';			//кастомайзер
 require_once $path . 'custom-header.php';
 require_once $path . 'template-tags.php';
+require_once $path . 'ex-content-addvertise.php';//добавить рекламу в контент
 include $path . '_test.php';
-// require_once $path . 'ex-metabox-address.php';
+//require_once $path . 'ex-metabox-address.php';
 // require_once $path . 'ex-menu-taxonomy.php';
 //require_once $path . 'ex-api-dollors-rubli.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
@@ -27,6 +28,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 //require_once  $path  . 'magic-http-api.php';
 // require_once $path . 'magic-rest-api.php';
 require_once $path . 'ex-api-polis.php';
+require_once $path . 'ex-api-instagram.php';
 
 /*========================================================
 		*		WooCommerce
