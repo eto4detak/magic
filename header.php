@@ -197,8 +197,4 @@ section and everything up until
 	<?php }else{ ?>
 		console.log('template = no');
 	<?php } ?></script>
-	<?php function vardump($var) {
-	  echo '<pre>';
-	  var_dump($var);
-	  echo '</pre>';
-	} ?>
+	<?php ?>

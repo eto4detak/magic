@@ -83,7 +83,7 @@ console.log('end test');
 
 (function(){
   'use strict';
-  console.log("test2.js");
+ // console.log("test2.js");
 
   var tok = '7641967042.c1e404e.1fcdb358d38c4f4fb054f26fcb8b5a53', // я уже давал ссылку чуть выше
     userid = '7641967042', // ID пользователя, можно выкопать в исходном HTML, можно использовать спец. сервисы либо просто смотрите следующий пример :)
@@ -107,6 +107,20 @@ $.ajax({
     console.log(result); // пишем в консоль об ошибках
   }
 });
-  console.log("finish test2.js");
+ // console.log("finish test2.js");
 })();
 
+  /*========================================================
+    *  чтение файла
+  ========================================================*/
+
+    var openFile = function(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      var text = reader.result;
+      console.log(reader.result.substring(0, 200));
+    };
+    reader.readAsText(input.files[0]);
+  };

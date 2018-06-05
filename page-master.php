@@ -11,6 +11,103 @@ get_header(); ?>
 
 }?>
 
+
+
+<?php function vardump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}
+$attachments = get_children( array(
+	'post_parent'    => 975,
+	'order'          => 'ASC',
+	'post_mime_type' => 'image',
+	'post_type'      => 'attachment',
+) );
+
+ // $args = array(
+ //        'post_parent' => 975,
+ //        'post_type' => 'attachment',
+ //        'post_mime_type' => '',
+ //        'posts_per_page' => -1,
+ //        'orderby' => 'menu_order',
+ //        'order' => 'ASC',
+ //    );
+ //    $children = get_children( $args );
+
+$args = array( 
+    'post_type' => array( 'product', ),
+    'posts_per_page' => -1,                 
+);
+$the_query = new WP_Query( $args );
+
+if ( $the_query->have_posts() ) :
+while ( $the_query->have_posts() ) : $the_query->the_post();
+
+	//get_id_woocom($product);
+endwhile;
+endif;
+wp_reset_postdata();
+
+	function get_id_woocom($product_woo)
+	{
+		$number_id = $product_woo->get_id();
+		$product_image_gallery = get_post_meta( $number_id, '_product_image_gallery', true );
+		$attachments         = array_filter( explode( ',', $product_image_gallery ) );
+		$media = get_post_thumbnail_id( $number_id );
+		$attachments = array_diff($attachments, array($media));
+		
+		$media = wp_get_attachment_image_url( 973);
+	  $exp = '.' .	end(explode(".", $media));
+	  vardump( $product_woo->name . $exp);
+		//$this->core->rename( $media, $product_woo->name . $exp );
+
+		 $counter = 2;
+		 foreach ($attachments as  $attach) {
+		 	if($counter > 10) $counter = $counter;
+		 	else $counter =  '0' . $counter;
+		 	vardump( $product_woo->name . '-' . $counter . $exp);
+		 	// $this->core->rename( $attach, $product_woo->name . '-' . $counter . $exp);
+		 	$counter++;
+		 }
+	}
+//end(explode(".", $filename));
+// $media = wp_get_attachment_image_src( 973 );
+	$media = get_post_thumbnail_id( 973 );
+// $media = wp_get_attachment_image_url( 973);
+
+vardump($media );
+vardump('========');
+//vardump('D:\OSPanel\domains\wp\magicc\wp-content\plugins\media-file-renamer\media-file-renamer.php');
+var_dump(end(explode(".", $media)));
+//vardump(get_the_post_thumbnail($media ));
+
+// $images = get_children( 'post_type=attachment&post_mime_type=image' );
+// foreach ( $images as $attachment_id => $attachment ) {
+// 		echo wp_get_attachment_image( $attachment_id, 'full' );
+// 	}
+// vardump($attachments);
+
+// 	global $mfrh_version, $mfrh_core;
+// 	$mfrh_version = '4.2.1';
+
+// 	// Admin
+// 	require( 'mfrh_admin.php');
+// 	$mfrh_admin = new Meow_MFRH_Admin( 'mfrh', 'D:\OSPanel\domains\wp\magicc\wp-content\plugins\media-file-renamer\media-file-renamer.php', 'media-file-renamer' );
+
+// 	// Core
+// 	require( 'core.php' );
+// 	global $mfrh_core;
+// 	$mfrh_core = new Meow_MFRH_Core( $mfrh_admin );
+
+// 	// UI
+// 	require( 'ui.php' );
+// 	new Meow_MFRH_UI( $mfrh_core, $mfrh_admin );
+
+// $tt = new Meow_MFRH_Core();
+//vardump($tt);
+
+ ?>
 <div id="primary" class="content-area col ">
 
 
@@ -26,6 +123,27 @@ get_header(); ?>
 	</div>
 
 </div>
+
+
+<?php 
+$args = array(
+	'taxonomy' => 'product_cat',
+	'hide_empty' => false,
+);
+$terms = get_terms( $args );
+foreach ($terms as $key => $value) {
+ echo	$value->slug;
+ echo	$value->term_id;
+ // /$address_lines = carbon_get_theme_option('crb_addresses', 'complex');
+ var_dump( carbon_get_term_meta( $value->term_id, 'crb_exclude_cat' ));
+ echo	' ';
+}
+
+var_dump('======================');
+//var_dump($terms);
+ ?>
+
+
 	<?php GetInstagram(); ?>
 	<a href="#" class="eModal-1">Open Modal</a>
 	<?php echo GetPolis("бре"); ?>
@@ -43,6 +161,12 @@ get_header(); ?>
 				<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
 					<?php if($count===1) : ?>
 					<div class="item">
+						<?php 
+
+
+
+
+						 ?>
 					<?php endif; ?>
 					<?php global $product; ?>
 					<?php $p_ids[] = $product->get_id(); 

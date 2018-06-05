@@ -1,0 +1,105 @@
+
+    /*========================================================
+      *  стили для меню вместо селета в карточке товара
+    ========================================================*/
+
+nav.animated {
+   position: relative;
+  // z-index: 200;
+   height: 30px;
+   width: 250px;
+       box-sizing: border-box;
+  // top: 50%;
+  // left: 50%;
+  // width: 360px;
+  // margin: -78px 0 100px -180px;
+  // -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  // -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+nav.animated ul.animated-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flow-root;
+//position: absolute;
+}
+ul.animated-menu li{
+  line-height: 1em;
+}
+nav.animated ul.animated-menu li{
+  margin-left: 0;
+  margin-bottom: 0;
+  a{
+    cursor: pointer;
+  }
+}
+
+.animated-menu-header{
+    position: relative;
+   // z-index: 400;
+}
+
+nav.animated ul.animated-menu li {
+  /* Sub Menu */
+}
+nav.animated ul.animated-menu li a {
+//  height: 30px;
+  display: block;
+  background: #878787;
+  padding: 10px 15px;
+  color: #fff;
+  text-decoration: none;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+  -ms-transition: 0.2s linear;
+  -o-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+nav.animated ul.animated-menu li a:hover {
+ // height: 30px;
+      color: #fff;
+  background: #2f2f2f;
+}
+nav.animated ul.animated-menu li a .fa {
+  width: 16px;
+  text-align: center;
+  margin-right: 5px;
+}
+nav.animated ul.animated-menu li a .badge {
+  display: inline-block;
+  background: #fff;
+  /* IE Fallback */
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 7px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+nav.animated ul.animated-menu  li a.attr-select {
+ // height: 30px;
+  background: #494949;
+  border-left: 4px solid transparent;
+  padding: 10px 20px;
+}
+nav.animated ul.animated-menu li ul.animated-menu li a:hover {
+ // height: 30px;
+  background: #2f2f2f;
+  border-left: 4px solid #878787;
+}
+/* Float Right/Left */
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+nav.animated ul.animated-menu .menu-select-value{
+    color: #fff;
+}
+@media (min-width: 1200px){
+  nav.animated{
+    width: 185px;
+}
+
+}

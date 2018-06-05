@@ -1,28 +1,7 @@
-.b-geo-target {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.b-geo-target:hover .b-geo-target__munu {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.b-geo-target .b-geo-target__munu {
-  width: 200px;
-  z-index: 100;
-  background: #fff;
-  color: #000;
-  position: absolute;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  display: none;
-}
-.b-geo-target .b-geo-target__munu a {
-  opacity: 0.7;
-}
-.b-geo-target .b-geo-target__munu a:hover {
-  opacity: 1;
-}
+/*========================================================
+	  *  geotarget
+	========================================================*/
+/*========================================================
+	  *  plitka diviecomerce кнопка
+	========================================================*/
+/*# sourceMappingURL=test.css.map */

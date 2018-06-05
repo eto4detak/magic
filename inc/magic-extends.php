@@ -14,6 +14,7 @@ require_once $path . 'customizer.php';			//кастомайзер
 require_once $path . 'custom-header.php';
 require_once $path . 'template-tags.php';
 require_once $path . 'ex-content-addvertise.php';//добавить рекламу в контент
+require_once $path . 'ex-rename-attach.pnp';//редактировать изображения
 include $path . '_test.php';
 //require_once $path . 'ex-metabox-address.php';
 // require_once $path . 'ex-menu-taxonomy.php';
@@ -39,5 +40,7 @@ require_once $path_woocommerce . 'magic-woocommerce-template-add-field-to-produc
 // require_once $path_woocommerce . 'magic-http-api-woocommerce.php';
 // require_once $path_woocommerce . 'magic-woocomerce-rubli.php';
 // require_once $path_woocommerce . 'magic-woocomerce-add-order.php';
+
+
 
 
