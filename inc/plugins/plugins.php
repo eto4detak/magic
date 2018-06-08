@@ -154,3 +154,33 @@ $product_woo = $post;
 
 		die();
 	}
+
+
+		/*========================================================
+		  * Webcraftic Cyr to Lat reloaded   -- заменить неправильную utf (-b5-d0-bb-d1-8c правильная %d1%82%d0%b5) на транслит
+		========================================================*/
+
+public function transliterate($title, $ignore_special_symbols = false)
+		{
+			$origin_title = $title;
+			$iso9_table = $this->getSymbolsPack();
+			$title = preg_replace('/\-/', '%', $title);
+		  $title = urldecode($title);
+			$title = strtr($title, $iso9_table);
+			$title = preg_replace('/%/', '-', $title);
+
+			if( function_exists('iconv') ) {
+				$title = iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $title);
+			}
+
+			if( !$ignore_special_symbols ) {
+				// $title = preg_replace("/[^A-Za-z0-9'_\-\.]/", '-', $title);
+				// $title = preg_replace('/\-/', '%', $title);
+				$title = urldecode($title);
+				$title = preg_replace('/\-+/', '-', $title);
+				$title = preg_replace('/^-+/', '', $title);
+				$title = preg_replace('/-+$/', '', $title);
+			}
+
+			return apply_filters('wbcr_ctl_transliterate', $title, $origin_title, $iso9_table);
+		}
