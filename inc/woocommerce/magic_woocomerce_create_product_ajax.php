@@ -3,7 +3,7 @@
 				========================================================*/
 add_action( 'wp_enqueue_scripts', 'construct_myajax_data', 99 );
 function construct_myajax_data(){
-	wp_localize_script( 'front-end', 'myajax', 
+	wp_localize_script( 'jquery', 'myajax', 
 		array(
 			'url' => admin_url('admin-ajax.php'),
 			'nonce' => wp_create_nonce('myajax-nonce')
@@ -44,10 +44,15 @@ function construct_add_product() {
 		========================================================*/
 global $woocommerce;
 $b = $_POST['constructData'];
-$a = str_replace('\\', "", $b);
-$a = mb_strcut($a, strripos($a, 'id')-1);
+
+$c = str_replace('\\', "", $b);
+$a = mb_strcut($c, strripos($c, 'id')-1);
 $a = '{' .$a;
 $data_constr = json_decode($a);
+$b_new =  wp_unslash($b);
+$data_constr_sl = json_decode($b_new);
+
+if(empty($data_constr->id)) wp_die();
 $content 	=  	'Заказ id =  ' . $data_constr->id . "<br>";
 $content 	.=  'base = ' . $data_constr->vars->base . "   ||   ";
 $content 	.=  'model = ' . $data_constr->vars->model . "   ||   ";
@@ -87,12 +92,11 @@ if($post_id){
 	$product->set_catalog_visibility( 'hidden' );
 	$product->save();
 	update_post_meta( $post_id, '_stock_status', 'instock');
-	// update_post_meta( $post_id, 'total_sales', '0');
+	// update_post_meta( $post_id, 'total_sales', $data_constr_sl? absint($data_constr_sl->sum) : 0 );
 	update_post_meta( $post_id, '_downloadable', 'no');
 	update_post_meta( $post_id, '_virtual', 'no');
-	// update_post_meta( $post_id, '_regular_price', $data_constr? absint($data_constr) : 0 );
-	 update_post_meta( $post_id, '_regular_price', 0 );
-	// update_post_meta( $post_id, '_sale_price', 21 );
+	update_post_meta( $post_id, '_regular_price', $data_constr_sl? absint($data_constr_sl->sum) : 0 );
+	// update_post_meta( $post_id, '_sale_price', $data_constr_sl? absint($data_constr_sl->sum) : 0 );
 	update_post_meta( $post_id, '_purchase_note', "" );
 	update_post_meta( $post_id, '_featured', "no" );
 	update_post_meta( $post_id, '_weight', "" );
@@ -103,7 +107,7 @@ if($post_id){
 	update_post_meta( $post_id, '_product_attributes', array());
 	update_post_meta( $post_id, '_sale_price_dates_from', "" );
 	update_post_meta( $post_id, '_sale_price_dates_to', "" );
-	update_post_meta( $post_id, '_price',  0 );
+	update_post_meta( $post_id, '_price',  $data_constr_sl? absint($data_constr_sl->sum) : 0 );
 	update_post_meta( $post_id, '_sold_individually', "" );
 	update_post_meta( $post_id, '_manage_stock', "no" );
 	update_post_meta( $post_id, '_backorders', "no" );
@@ -168,6 +172,10 @@ function construct_delete_products( $order_id ) {
 		}
 	}
 }
+/*========================================================
+		*		end удален продукт
+		========================================================*/
+?>
 /*========================================================
 		*		end удален продукт
 		========================================================*/

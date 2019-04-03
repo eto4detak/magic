@@ -142,10 +142,6 @@ function wc1c_import_character_data_handler($is_full, $names, $depth, $name, $da
 function wc1c_import_end_element_handler($is_full, $names, $depth, $name) {
   global $wpdb, $wc1c_groups, $wc1c_group_depth, $wc1c_group_order, $wc1c_property, $wc1c_property_order, $wc1c_requisite_properties, $wc1c_product, $wc1c_subproducts;
   // test00 начало создания термина
-     if( in_array($wc1c_property['Наименование'], ["Метка", "Топ продаж", "Распродажа", "Новинки"]) ) {
-
-      // return;
-     }
 
   if (@$names[$depth - 1] == 'Группы' && $name == 'Группа') {
     if (empty($wc1c_groups[$wc1c_group_depth]['Группы'])) {
@@ -160,15 +156,7 @@ function wc1c_import_end_element_handler($is_full, $names, $depth, $name) {
     wc1c_clean_woocommerce_categories($is_full);
   }
   elseif (@$names[$depth - 1] == 'Свойства' && $name == 'Свойство') {
-    // 
-      echo '<pre class="aaa" style="display:">';
-      var_dump('----end_element_handler---');
-      var_dump($wc1c_property);
-      var_dump($wc1c_property_order);
-      var_dump($wc1c_group_order);
-      var_dump($wc1c_product);
-      var_dump($wc1c_subproducts);
-      echo '</pre>';
+
     $result = wc1c_replace_property($is_full, $wc1c_property, $wc1c_property_order);
     if ($result) {
       $attribute_taxonomy = $result;
@@ -234,7 +222,6 @@ function wc1c_import_end_element_handler($is_full, $names, $depth, $name) {
     if ($wc1c_subproducts) wc1c_replace_subproducts($is_full, $wc1c_subproducts);
 
     wc1c_clean_products($is_full);
-    // test00
    wc1c_clean_product_terms();
   }
   elseif (!$depth && $name == 'КоммерческаяИнформация') {
@@ -326,21 +313,11 @@ function wc1c_wp_unique_term_slug($slug, $term, $original_slug) {
   return $slug;
 }
 add_filter('wp_unique_term_slug', 'wc1c_wp_unique_term_slug', 10, 3);
-// test00
 
 function wc1c_replace_term($is_full, $guid, $parent_guid, $name, $taxonomy, $order, $use_guid_as_slug = false) {
   // test00 создать термины
   global $wpdb;
-  echo '<pre class="aaa" style="display:">';
-  var_dump(1111);
-  var_dump($is_full);
-  var_dump($guid);
-  var_dump($parent_guid);
-  var_dump($name);
-  var_dump($taxonomy);
-  var_dump($order);
-  var_dump($use_guid_as_slug);
-  echo '</pre>';
+
   $term_id = wc1c_term_id_by_meta('wc1c_guid', "$taxonomy::$guid");
   if ($term_id) $term = get_term($term_id, $taxonomy);
 
@@ -350,51 +327,41 @@ function wc1c_replace_term($is_full, $guid, $parent_guid, $name, $taxonomy, $ord
 
     $name = wc1c_unique_term_name($name, $taxonomy, $parent);
     $slug = wc1c_unique_term_slug($name, $taxonomy, $parent);
-  echo '<pre class="aaa" style="display:">';
-  var_dump(222);
-  var_dump($name);
-  var_dump($slug);
-  echo '</pre>';
+
     $args = array(
       'slug' => $slug,
       'parent' => $parent,
     );
     if ($use_guid_as_slug) $args['slug'] = $guid;
-    // test00
+
     $result = wp_insert_term($name, $taxonomy, $args);
     wc1c_check_wpdb_error();
     wc1c_check_wp_error($result);
 
     $term_id = $result['term_id'];
-    // test00
+
     update_woocommerce_term_meta($term_id, 'wc1c_guid', "$taxonomy::$guid");
 
     $is_added = true;
   }
 
   if (empty($is_added)) {
-      echo '<pre class="aaa" style="display:">';
-  var_dump(33);
-  echo '</pre>';
+
     if (trim($name) != $term->name) $name = wc1c_unique_term_name($name, $taxonomy, $parent);
     $parent = $parent_guid ? wc1c_term_id_by_meta('wc1c_guid', "$taxonomy::$parent_guid") : null;
     $args = array(
       'name' => $name,
       'parent' => $parent,
     );
-// test00
+
    $result = wp_update_term($term_id, $taxonomy, $args);
     wc1c_check_wp_error($result);
   }
-  echo '<pre class="aaa" style="display:">';
-  var_dump(444);
-  echo '</pre>';
+
   if ($is_full) wc_set_term_order($term_id, $order, $taxonomy);
 
  // update_woocommerce_term_meta($term_id, 'wc1c_timestamp', WC1C_TIMESTAMP);
-    echo '<pre class="aaa" style="display:">';
-  var_dump(555);
-  echo '</pre>';
+
 }
 
 function wc1c_replace_group($is_full, $group, $order, $groups) {
@@ -434,12 +401,6 @@ function wc1c_unique_woocommerce_attribute_name($attribute_label) {
 
 function wc1c_replace_woocommerce_attribute($is_full, $guid, $attribute_label, $attribute_type, $order, $preserve_fields) {
           // test00 убрать ненужные атрибуты
-    // echo '<pre class="aaa" style="display:">';
-    // var_dump('&&&&&');
-    // var_dump($attribute_label);
-    // echo '</pre>';
-    //       if($attribute_label === 'Путь к картинке'
-    //           || $attribute_label === 'Товар отсутствует') return;
 
   global $wpdb;
 
@@ -494,10 +455,7 @@ function wc1c_replace_woocommerce_attribute($is_full, $guid, $attribute_label, $
 
 function wc1c_replace_property_option($property_option, $attribute_taxonomy, $order) {
   if (!isset($property_option['ИдЗначения'], $property_option['Значение'])) return;
-    echo '<pre class="aaa" style="display:">';
-    var_dump('!!!');
-    var_dump($attribute_taxonomy);
-    echo '</pre>';
+
   wc1c_replace_term(true, $property_option['ИдЗначения'], null, $property_option['Значение'], $attribute_taxonomy, $order, true);
 }
 
@@ -505,16 +463,8 @@ function wc1c_replace_property($is_full, $property, $order) {
   $property = apply_filters('wc1c_import_property_xml', $property, $is_full);
   if (!$property) return;
   // test00 убрать термины
-    echo '<pre class="aaa" style="display:">';
-    var_dump('####');
-    var_dump($property['Наименование']);
-    var_dump($property);
-    echo '</pre>';
-     if( in_array($property['Наименование'], ['Путь к картинке', 'Товар отсутствует', 'Старый код']) ) return;
-     // if( in_array($property['Наименование'], ["Метка", "Топ продаж", "Распродажа", "Новинки"]) ) {
 
-     // }
-     // , 'Высота', 'Ширина', 'Длина', 'Вес'
+     if( in_array($property['Наименование'], ['Путь к картинке', 'Товар отсутствует', 'Старый код']) ) return;
 
   $preserve_fields = apply_filters('wc1c_import_preserve_property_fields', array(), $property, $is_full);
 
@@ -529,11 +479,7 @@ function wc1c_replace_property($is_full, $property, $order) {
 
   if ($attribute_type == 'select' && !empty($property['ВариантыЗначений'])) {
     foreach ($property['ВариантыЗначений'] as $i => $property_option) {
-      echo '<pre class="aaa" style="display:">';
-      var_dump('----wc1c_replace_property---');
-      var_dump($property_option);
-      var_dump($attribute['taxonomy']);
-      echo '</pre>';
+
       wc1c_replace_property_option($property_option, $attribute['taxonomy'], $i + 1);
     }
   }
@@ -794,26 +740,9 @@ function wc1c_replace_product($is_full, $guid, $product) {
       $attribute_terms = array();
       $attribute_values = array();
       $property_values = @$property['Значение'];
-                    echo '<pre class="aaa" style="display:">';
-              var_dump('^^^^^^^^^^^^^^^');
-              var_dump($product['ЗначенияСвойств']);
-              var_dump($attribute);
-              var_dump($property_values);
-              var_dump($product_attributes);
-              echo '</pre>';
+
       if ($property_values) {
         foreach ($property_values as $property_value) {
-          // test00  [no] убрать ненужные атрибуты
-          //             echo '<pre class="aaa" style="display:">';
-          //   var_dump('----');
-          //   var_dump($property_value);
-          //   var_dump($attribute);
-          //   echo '</pre>';
-          // if($attribute['attribute_label'] === 'Путь к картинке'
-          //     || $attribute['attribute_label'] === 'Товар отсутствует') continue;
-          if(in_array($property_value, ['Путь к картинке', 'Товар отсутствует', 'Старый код'])){
-
-          }
 
           if (!$property_value) continue;
 
@@ -835,7 +764,7 @@ function wc1c_replace_product($is_full, $guid, $product) {
                   $args = array(
                     'slug' => $slug,
                   );
-                  // test00
+
                   $result = wp_insert_term($term_name, $attribute['taxonomy'], $args);
                   wc1c_check_wpdb_error();
                   wc1c_check_wp_error($result);
@@ -871,28 +800,11 @@ function wc1c_replace_product($is_full, $guid, $product) {
 
         if($attribute_terms){
              $term = get_term_by('id', $attribute_terms[0], $product_attribute['name'], ARRAY_A);
-            echo '<pre class="aaa" style="display:">';
-            var_dump('qqqqqqqq');
 
-
-            var_dump($attribute['attribute_label']);
-            var_dump($attribute['taxonomy']);
-            var_dump($product_attribute);
-            var_dump(get_taxonomy($product_attribute['name']));
-            echo '</pre>';
           if(in_array(  $attribute['attribute_label'], ["Метка", "Топ продаж", "Распродажа", "Новинки"])){
             $tags =  wp_get_post_terms( $post_id, 'product_tag', array('fields' => 'names') );
-            // $term_name =  sanitize_term( $term['name'], 'product_tag', 'slug' );
-            //   echo '<pre class="aaa" style="display:">';
-              var_dump('eeeeeee');
-              var_dump($attribute);
-            //   echo '</pre>';
+
             if(!in_array(  $term['name'], ["нет", "Нет", '.', ','])){
-              echo '<pre class="aaa" style="display:">';
-                var_dump('fffffff');
-                var_dump($term);
-                var_dump(get_taxonomy($product_attribute['name']));
-                echo '</pre>';
               wp_set_post_terms($post_id, $term['name'], 'product_tag', true);
             }
             
@@ -900,39 +812,15 @@ function wc1c_replace_product($is_full, $guid, $product) {
           }
         }else{
 
-                        echo '<pre class="aaa" style="display:">';
-              var_dump('bbbbbbbbb');
-              var_dump($product_attribute['name']);
-              var_dump($attribute);
-              echo '</pre>';
           if(in_array($product_attribute['name'], ["Метка", "Топ продаж", "Распродажа", "Новинки"]) ){
-             echo '<pre class="aaa" style="display:">';
-
-              var_dump( $attribute_values);
-              var_dump( $attribute['taxonomy']);
-              var_dump($attribute['attribute_id']);
-              var_dump(get_term_by('id', $attribute['attribute_id'], $attribute['taxonomy'], ARRAY_A));
-              echo '</pre>';
-            if(!in_array(  $product_attribute['value'], ["нет", "Нет", '.', ','])){
-                echo '<pre class="aaa" style="display:">';
-                var_dump('ddddddddddd');
-                var_dump($product_attribute['name']);
-                var_dump($product_attribute['value']);
-                echo '</pre>';
-              wp_set_post_terms($post_id,  $product_attribute['value'], 'product_tag', true);
+            if(in_array(  $product_attribute['value'], ["Да", "да"])){
+              wp_set_post_terms($post_id,  $product_attribute['name'], 'product_tag', true);
             }
             continue;
-          }         
+          }
         }
         
-
-        echo '<pre class="aaa" style="display:">';
-        var_dump('%%%%%%1111');
-        var_dump($attribute_terms);
-        var_dump($product_attribute['name']);
-        var_dump($product_attribute['value'] );
-        var_dump($attribute_values );
-        echo '</pre>';
+        if(in_array($product_attribute['name'], ['Путь к картинке', 'Товар отсутствует', 'Старый код']))continue;
         if($product_attribute['name'] === 'Вес'){
           $p_sim = wc_get_product( $post_id );
           $p_sim->set_weight($product_attribute['value']);
@@ -957,34 +845,6 @@ function wc1c_replace_product($is_full, $guid, $product) {
           $p_sim->save();
           continue;
         }
-
-        if(0 && in_array($attribute['attribute_label'], ["Метка", "Топ продаж", "Распродажа", "Новинки"]) ){
-
-          $result = get_term_by('name', $product_attribute['value'], 'product_tag', ARRAY_A);
-          if (!$result) {
-
-        //         $name = wc1c_unique_term_name($name, $taxonomy, $parent);
-        // $slug = wc1c_unique_term_slug($name, $taxonomy, $parent);
-        // $args = array(
-        //   'slug' => $slug,
-        //   'parent' => $parent,
-        // );
-
-            $qwe = wp_insert_term($product_attribute['value'], 'product_tag');
-            // $qwe = wp_insert_term($product_attribute['value'], 'product_tag', $args);
-              echo '<pre class="aaa" style="display:">';
-              var_dump('yyyyyyyyyyy');
-              var_dump($attribute['attribute_label']);
-              var_dump($product_attribute);
-              var_dump($product_attribute['value']);
-              var_dump($attribute_values);
-              var_dump($slug);
-              var_dump($qwe);
-              echo '</pre>';
-          }
-
-          continue;
-        }
     
 
         $product_attributes[$product_attribute_key] = $product_attribute;
@@ -1001,13 +861,7 @@ function wc1c_replace_product($is_full, $guid, $product) {
       register_taxonomy($attribute_taxonomy, null);
       $result = wp_set_post_terms($post_id, $attribute_terms, $attribute_taxonomy);
       wc1c_check_wp_error($result);
-        echo '<pre class="aaa" style="display:">';
-        var_dump('----wp_set_post_terms-----');
-        var_dump($attribute_terms);
-        var_dump($attribute_taxonomy);
-        var_dump($result);
-        var_dump('----end wp_set_post_terms-----');
-        echo '</pre>';
+
     }
   }
 
@@ -1044,7 +898,6 @@ function wc1c_replace_product($is_full, $guid, $product) {
     $product_attribute_name = $characteristic['Наименование'];
     $product_attribute_key = sanitize_title($product_attribute_name);
     $product_attribute_position = count($product_attributes);
-    // test00
 
 
     $product_attributes[$product_attribute_key] = array(
@@ -1080,10 +933,7 @@ function wc1c_replace_product($is_full, $guid, $product) {
     if ($current_product_attributes != $product_attributes_copy) {
       $product_attributes = array_merge($product_attributes, $current_product_attribute_variations);
       // test00 не присваивать продукту атрибут
-        echo '<pre class="aaa" style="display:">';
-        var_dump('@@@@@@@@@@');
-        var_dump($product_attributes);
-        echo '</pre>';
+
       update_post_meta($post_id, '_product_attributes', $product_attributes);
     }
   }

@@ -67,63 +67,71 @@ if(class_exists('Carbon_Fields\Container') )
 				  ->set_option_value('yes')
 		 ) );
 
-// Container::make( 'theme_options', 'Управление' )
-// 		 ->add_tab( 'Шапка сайта', array(
-// 			 Field::make( 'complex', 'crb_contact_address', 'Настройки кантактов' )->add_class('my-custom-class')
-// 				  ->add_fields( array(
-// 					  Field::make( 'text', 'email', '' )->set_width( 50 )
-// 				  ) ),
-// 				Field::make( 'complex', 'magic_currency', 'Добавьте валюту' )
-// 				  ->add_fields( array(
-// 					  Field::make( 'text', 'mini_сurrency', 'Краткая запись валюты' )->set_width( 30 ),
-// 					  Field::make( 'text', 'сurrency', 'Описание валюты' )->set_width( 70 )
-// 				  ) ),
-// 				Field::make( 'complex', 'magic_language', 'Добавьте язык' )
-// 				  ->add_fields( array(
-// 					  Field::make( 'text', 'language', 'Язык' )->set_width( 50 ),
-// 				  ) ),
+Container::make( 'theme_options', 'Управление' )
+		 ->add_tab( 'Шапка сайта', array(
+			 Field::make( 'complex', 'crb_contact_address', 'Настройки кантактов' )->add_class('my-custom-class')
+				  ->add_fields( array(
+					  Field::make( 'text', 'email', '' )->set_width( 50 )
+				  ) ),
+				Field::make( 'complex', 'magic_currency', 'Добавьте валюту' )
+				  ->add_fields( array(
+					  Field::make( 'text', 'mini_сurrency', 'Краткая запись валюты' )->set_width( 30 ),
+					  Field::make( 'text', 'сurrency', 'Описание валюты' )->set_width( 70 )
+				  ) ),
+				Field::make( 'complex', 'magic_language', 'Добавьте язык' )
+				  ->add_fields( array(
+					  Field::make( 'text', 'language', 'Язык' )->set_width( 50 ),
+				  ) ),
 
-// 		 ) )
-// 		 ->add_tab( 'Наша команда', array(
-// 			 Field::make( 'complex', 'crb_places', 'Список' )
-// 				  ->add_fields( array(
-// 					  Field::make( 'image', 'photo', 'Фото' )->set_value_type( 'url' )->set_width( 33 ),
-// 					  Field::make( 'text', 'job', 'Должность' )->set_width( 33 ),
-// 					  Field::make( 'text', 'fio', 'Фамилия, имя и отчество' )->set_width( 33 )
-// 				  ) )
-// 		 ) )
-// 		 ->add_tab( 'Контакты', array(
-// 			 Field::make( 'text', 'url_fb', 'Фейсбук' ),
-// 			 Field::make( 'text', 'url_vk', 'вКонтакте' ),
-// 			 Field::make( 'text', 'url_tw', 'Твиттер' ),
-// 			 Field::make( 'text', 'url_sk', 'Скайп' ),
-// 			 Field::make( 'text', 'url_lin', 'ЛинкедИн' ),
-// 			 Field::make( "map", "crb_company_location", "Местоположение" )
-// 				  ->help_text( 'Перетащите указатель на карту, чтобы выбрать местоположение' ),
-// 		 ) )
-// 		 ->add_tab( 'СЕО', array(
-// 			 Field::make( 'text', 'title-lp', 'Title лендинга' ),
-// 			 Field::make( 'text', 'description-lp', 'Description лендинга' ),
-// 			 Field::make( "header_scripts", "header_google_analytics", 'Код счётчика Гугл.Аналитикс' ),
-// 			 Field::make( "header_scripts", "header_script_yandex_metrika", 'Код счётчика Яндекс.Метрики' ),
-// 		 ) )
-//  		->add_tab( 'Слайдер', array(
-//  				 Field::make( 'complex', 'magic_slider', 'Добавить слайдер' )
-// 				  ->add_fields( array(
-// 					  Field::make( 'text', 'magic_slider_name', 'Уникальное имя слайдера' )->set_width( 33 ),
-// 						Field::make( 'text', 'magic_slider_Description', 'Описание слайдера' )->set_width( 33 ),
-// 						Field::make( 'complex', 'magic_info', 'Добавить слайдер' )->set_layout( 'tabbed-vertical' )
-// 						  ->add_fields( array(
-// 							  Field::make("image", "photo", "Фото")->set_width( 33 )->add_class('my-custom-class')->set_value_type( 'url' ),
-// 							  Field::make( 'text', 'text1', 'Текст 1' )->set_width( 33 ),
-// 							  Field::make( 'text', 'text2', 'Текст 2' )->set_width( 33 ),
-// 							  Field::make( 'text', 'text3', 'Текст 3' )->set_width( 33 ),
-// 							  Field::make( 'text', 'button', 'Текст кнопки' )->set_width( 33 ),
-// 						  ) ),
-// 				  ) ),
-
-// 		 ) )
-// 		 ;
+		 ) )
+		 ->add_tab( 'Наша команда', array(
+			 Field::make( 'complex', 'crb_places', 'Список' )
+				  ->add_fields( array(
+					  Field::make( 'image', 'photo', 'Фото' )->set_value_type( 'url' )->set_width( 33 ),
+					  Field::make( 'text', 'job', 'Должность' )->set_width( 33 ),
+					  Field::make( 'text', 'fio', 'Фамилия, имя и отчество' )->set_width( 33 )
+				  ) )
+		 ) )
+		 ->add_tab( 'Контакты', array(
+			 Field::make( 'text', 'url_fb', 'Фейсбук' ),
+			 Field::make( 'text', 'url_vk', 'вКонтакте' ),
+			 Field::make( 'text', 'url_tw', 'Твиттер' ),
+			 Field::make( 'text', 'url_sk', 'Скайп' ),
+			 Field::make( 'text', 'url_lin', 'ЛинкедИн' ),
+			 Field::make( "map", "crb_company_location", "Местоположение" )
+				  ->help_text( 'Перетащите указатель на карту, чтобы выбрать местоположение' ),
+		 ) )
+		 ->add_tab( 'СЕО', array(
+			 Field::make( 'text', 'title-lp', 'Title лендинга' ),
+			 Field::make( 'text', 'description-lp', 'Description лендинга' ),
+			 Field::make( "header_scripts", "header_google_analytics", 'Код счётчика Гугл.Аналитикс' ),
+			 Field::make( "header_scripts", "header_script_yandex_metrika", 'Код счётчика Яндекс.Метрики' ),
+		 ) )
+ 		->add_tab( 'Слайдер', array(
+ 				 Field::make( 'complex', 'magic_slider', 'Добавить слайдер' )
+				  ->add_fields( array(
+					  Field::make( 'text', 'magic_slider_name', 'Уникальное имя слайдера' )->set_width( 33 ),
+						Field::make( 'text', 'magic_slider_Description', 'Описание слайдера' )->set_width( 33 ),
+						Field::make( 'complex', 'magic_info', 'Добавить слайдер' )->set_layout( 'tabbed-vertical' )
+						  ->add_fields( array(
+							  Field::make("image", "photo", "Фото")->set_width( 33 )->add_class('my-custom-class')->set_value_type( 'url' ),
+							  Field::make( 'text', 'text1', 'Текст 1' )->set_width( 33 ),
+							  Field::make( 'text', 'text2', 'Текст 2' )->set_width( 33 ),
+							  Field::make( 'text', 'text3', 'Текст 3' )->set_width( 33 ),
+							  Field::make( 'text', 'button', 'Текст кнопки' )->set_width( 33 ),
+						  ) ),
+				  ) ),
+		 ) )
+ 		// seo
+ 		// ->add_tab( 'Шаблоны для Yoast SEO', array(
+			//  Field::make( 'complex', 'crb_yoast_temp', 'Новые шаблоны Yoast SEO' )
+			// 	  ->add_fields( array(
+			// 		  Field::make( 'text', 'name', 'Название шаблона' )->set_width( 33 ),
+			// 		  Field::make( 'text', 'ru', 'Русский(ru)' )->set_width( 33 ),
+			// 		  Field::make( 'text', 'ua', 'Українська(ua)' )->set_width( 33 )
+			// 	  ) )
+		 // ) )
+		 ;
 // Container::make( 'term_meta', 'Настройки Term' )
 // 		 ->show_on_taxonomy( 'pa_color' ) // По умолчанию, можно не писать
 // 		 ->add_fields( array(

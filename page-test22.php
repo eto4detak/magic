@@ -8,6 +8,12 @@ Template Post Type: post, page
 get_header();
 if( is_page_template( 'page-test.php' )) echo "<div>11111</div><br>";
 
+
+
+
+
+
+
 // post_add_content_update_all22(1280);
 // // post_add_content_update_all22(1276);
 // // post_add_content_update_all22(1278);
